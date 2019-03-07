@@ -3,15 +3,21 @@ pipeline {
     parameters{
         choice(
             description:'The type of release this is: A major, minor or a bug fix release.',
-            name:'release-type',
+            name:'ReleaseType',
             choices:'major\nminor\nbugfix'
         )
         string(
             description: 'Select branch from where to trigger the release.',
-            name:'branch-name'
+            name:'BranchName'
         )
     }
     stages {
+        stage('validate'){
+            steps{
+                echo "Building configuration: ${params.ReleaseType}"
+                echo "Building configuration: ${params.BranchName}"
+            }
+        }
         stage('clean') { 
             steps { 
                 sh "mvn clean"
