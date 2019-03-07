@@ -14,8 +14,8 @@ pipeline {
     stages {
         stage('Script validation'){
             steps{
-                sh "echo $release-type"
-                sh "echo $branch-name"
+                echo "release-type: ${params.release-type}"
+                echo "branch-name: ${params.branch-name}"
             }
         }
         stage('clean') { 
