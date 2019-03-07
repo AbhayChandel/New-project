@@ -12,12 +12,6 @@ pipeline {
         )
     }
     stages {
-        stage('Script validation'){
-            steps{
-                echo "release-type: ${params.release-type}"
-                echo "branch-name: ${params.branch-name}"
-            }
-        }
         stage('clean') { 
             steps { 
                 sh "mvn clean"
