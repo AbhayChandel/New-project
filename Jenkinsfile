@@ -8,14 +8,15 @@ pipeline {
         )
         string(
             description: 'Select branch from where to trigger the release.',
-            name:'BranchName'
+            name:'BranchName',
+            defaultValue: 'develop'
         )
     }
     stages {
         stage('validate'){
             steps{
-                echo "Building configuration: ${params.ReleaseType}"
-                echo "Building configuration: ${params.BranchName}"
+                echo "Building configuration Release type: ${params.ReleaseType}"
+                echo "Building configuration Branch name: ${params.BranchName}"
             }
         }
         stage('clean') { 
