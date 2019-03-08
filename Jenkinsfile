@@ -11,12 +11,25 @@ pipeline {
             name:'BranchName',
             defaultValue: 'develop'
         )
+        string(
+            description: 'Version for this release.',
+            name:'VersionToRelease',
+            defaultValue: ''
+        )
     }
     stages {
         stage('validate'){
             steps{
                 echo "Building configuration Release type: ${params.ReleaseType}"
+                script {
+                        if (${params.ReleaseType} == 'bugfix') {
+                              echo 'Will merge this branch onto develop'
+                        } else {
+                              echo 'No merging required.'
+                        }
+                }  
                 echo "Building configuration Branch name: ${params.BranchName}"
+                echo "Building configuration Branch name: ${params.VersionToRelease}"
             }
         }
         stage('clean') { 
