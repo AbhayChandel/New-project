@@ -21,8 +21,7 @@ pipeline {
         stage('validate'){
                 echo "Building configuration Release type: ${params.ReleaseType}"  
                 echo "Building configuration Branch name: ${params.BranchName}"
-                echo "Building configuration Branch name: ${params.VersionToRelease}"
-            }
+                echo "Building configuration Branch name: ${params.VersionToRelease}
         }
         stage('clean') { 
             steps { 
@@ -31,9 +30,9 @@ pipeline {
         }
         stage('Merge To Feature Branch') { 
             when { equals expected: bugfix, actual: ${ReleaseType} }
-                   steps {
-                           echo 'Merging Bug fixed to develop branch.'
-                   }
-           }
+            steps {
+                echo 'Merging Bug fixed to develop branch.'
+            }
         }
+    }
 }
