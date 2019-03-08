@@ -19,15 +19,7 @@ pipeline {
     }
     stages {
         stage('validate'){
-            steps{
-                echo "Building configuration Release type: ${params.ReleaseType}"
-                script {
-                        if (${params.ReleaseType} == 'bugfix') {
-                              echo 'Will merge this branch onto develop'
-                        } else {
-                              echo 'No merging required.'
-                        }
-                }  
+                echo "Building configuration Release type: ${params.ReleaseType}"  
                 echo "Building configuration Branch name: ${params.BranchName}"
                 echo "Building configuration Branch name: ${params.VersionToRelease}"
             }
@@ -37,5 +29,11 @@ pipeline {
                 sh "mvn clean"
             }
         }
-    }
+        stage('Merge To Feature Branch') { 
+            when { equals expected: bugfix, actual: ${ReleaseType} }
+                   steps {
+                           echo 'Merging Bug fixed to develop branch.'
+                   }
+           }
+        }
 }
