@@ -21,7 +21,7 @@ pipeline {
         stage('validate'){
                 echo "Building configuration Release type: ${params.ReleaseType}"  
                 echo "Building configuration Branch name: ${params.BranchName}"
-                echo "Building configuration Branch name: ${params.VersionToRelease}
+                echo "Building configuration Branch name: ${params.VersionToRelease}"
         }
         stage('clean') { 
             steps { 
