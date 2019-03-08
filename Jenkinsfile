@@ -31,7 +31,7 @@ pipeline {
             }
         }
         stage('Merge To Feature Branch') { 
-            when { equals expected: bugfix, actual: ${ReleaseType} }
+            when { equals expected: bugfix, actual: "${ReleaseType}" }
             steps {
                 echo 'Merging Bug fixed to develop branch.'
             }
