@@ -8,9 +8,19 @@ pipeline {
     stages {
         stage('clean') { 
             steps { 
-                sh 'echo ${env.BRANCH_NAME}'
-                sh 'echo ${env.VERSION}'
                 sh "mvn clean"
+            }
+        }
+        stage('prepare code'){
+            sh 'env'      
+            sh """
+               SHORTREV=`git rev-parse --short HEAD`
+            """
+            script {
+            def pom = readMavenPom file: 'pom.xml'            
+            // Now you have access to raw version string in pom.version
+            // Based on your versioning scheme, automatically calculate the next one            
+            VERSION = pom.version.replaceAll('SNAPSHOT', BUILD_TIMESTAMP + "." + SHORTREV)
             }
         }
         stage('Merge To Feature Branch') { 
