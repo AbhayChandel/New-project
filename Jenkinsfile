@@ -8,17 +8,7 @@ pipeline {
         }
         stage('prepare code'){
             steps{     
-            sh """
-               SHORTREV=`git rev-parse --short HEAD`
-            """
-            script {
-            def pom = readMavenPom file: 'pom.xml'            
-            // Now you have access to raw version string in pom.version
-            // Based on your versioning scheme, automatically calculate the next one            
-            OLD_VERSION = pom.version
-            NEW_VERSION = pom.version.replaceAll('-SNAPSHOT',"")
-            }
-            sh "sed -i 's/OLD_VERSION/NEW_VERSION/g' pom.xml"
+            sh "sed -i 's/-SNAPSHOT//g' pom.xml"
         }
         }
         stage('build'){
