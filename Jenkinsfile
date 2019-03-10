@@ -15,14 +15,16 @@ pipeline {
             def pom = readMavenPom file: 'pom.xml'            
             // Now you have access to raw version string in pom.version
             // Based on your versioning scheme, automatically calculate the next one            
-            VERSION = pom.version.replaceAll('SNAPSHOT',"")
+            OLD-VERSION = pom.version
+            NEW-VERSION = pom.version.replaceAll('-SNAPSHOT',"")
             }
+            sh "sed -i 's/OLD-VERSION/NEW-VERSION/g' pom.xml"
         }
         }
         stage('build'){
             steps{
                 sh """
-          mvn -B org.codehaus.mojo:versions-maven-plugin:2.5:set -DprocessAllModules -DnewVersion=${VERSION} package
+          mvn -B org.codehaus.mojo:versions-maven-plugin:2.5:set -DprocessAllModules package
       """
             }
         }
