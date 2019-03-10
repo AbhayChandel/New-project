@@ -7,6 +7,7 @@ pipeline {
             }
         }
         stage('prepare code'){
+            steps{
             sh 'env'      
             sh """
                SHORTREV=`git rev-parse --short HEAD`
@@ -17,6 +18,7 @@ pipeline {
             // Based on your versioning scheme, automatically calculate the next one            
             VERSION = pom.version.replaceAll('SNAPSHOT', BUILD_TIMESTAMP + "." + SHORTREV)
             }
+        }
         }
         stage('Merge To Feature Branch') { 
             //when { equals expected: bugfix, actual: "${ReleaseType}" }
