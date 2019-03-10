@@ -7,7 +7,8 @@ pipeline {
     stages {
         stage('clean') { 
             steps { 
-                sh 'printenv'
+                sh 'echo ${env.BRANCH_NAME}'
+                sh 'echo ${env.VERSION}'
                 sh "mvn clean"
             }
         }
