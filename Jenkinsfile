@@ -13,9 +13,7 @@ pipeline {
         }
         stage('build'){
             steps{
-                sh """
-          mvn -B org.codehaus.mojo:versions-maven-plugin:2.5:set -DprocessAllModules package
-      """
+                sh "mvn clean package"
             }
         }
         
