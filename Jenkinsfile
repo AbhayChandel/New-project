@@ -20,6 +20,11 @@ pipeline {
             }
         }
         }
+        stage('build'){
+            steps{
+            }
+        }
+        
         stage('Merge To Feature Branch') { 
             //when { equals expected: bugfix, actual: "${ReleaseType}" }
             //when{expression { params.ReleaseType == 'bugfix' }}
