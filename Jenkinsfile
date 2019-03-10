@@ -7,8 +7,7 @@ pipeline {
             }
         }
         stage('prepare code'){
-            steps{
-            sh 'env'      
+            steps{     
             sh """
                SHORTREV=`git rev-parse --short HEAD`
             """
@@ -22,7 +21,9 @@ pipeline {
         }
         stage('build'){
             steps{
-                sh "mvn clean"
+                sh """
+          mvn -B org.codehaus.mojo:versions-maven-plugin:2.5:set -DprocessAllModules -DnewVersion=${VERSION} package
+      """
             }
         }
         
