@@ -12,7 +12,9 @@ pipeline {
     }
     stages {
         stage('Checkout') {
-           git branch: 'develop', credentialsId: 'jenkins-user-for-devon4j-github', url: 'git@github.com:AbhayChandel/New-project.git'
+            steps{
+                git branch: 'develop', credentialsId: 'jenkins-user-for-devon4j-github', url: 'git@github.com:AbhayChandel/New-project.git'
+            }
         }
         stage('prepare code'){
             steps{
