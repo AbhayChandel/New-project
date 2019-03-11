@@ -1,5 +1,8 @@
 pipeline { 
     agent any
+    environment {
+                GITHUB_DEVON4J_CREDS = credentials('jenkins-user-for-devon4j-github')
+    }
     parameters{
         string(
             description: 'Issue number for release on devon4j Github',
@@ -15,7 +18,8 @@ pipeline {
             }
         }
         stage('prepare code'){
-            steps{     
+            steps{
+                echo $GITHUB_DEVON4J_CREDS
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 sh "git add pom.xml"
                 sh "git commit -m '${params.ReleaseIssue}: Bump the version to release version by removing the -SNAPSHOT'"
