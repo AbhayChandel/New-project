@@ -1,6 +1,12 @@
 pipeline { 
     agent any
     stages {
+        stage('git'){
+            steps{
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']],
+     userRemoteConfigs: [[url: 'https://github.com/AbhayChandel/New-project.git']]])
+            }
+        }
         stage('clean') { 
             steps { 
                 sh "mvn clean"
