@@ -1,7 +1,7 @@
 pipeline { 
     agent any
     environment {
-                GITHUB_DEVON4J_CREDS = credentials('jenkins-user-for-devon4j-github')
+                GITHUB_DEVON4J_CREDENTIALS = credentials('jenkins-user-for-devon4j-github')
     }
     parameters{
         string(
@@ -19,7 +19,7 @@ pipeline {
         }
         stage('prepare code'){
             steps{
-                echo $GITHUB_DEVON4J_CREDS
+                sh 'printenv'
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 sh "git add pom.xml"
                 sh "git commit -m '${params.ReleaseIssue}: Bump the version to release version by removing the -SNAPSHOT'"
