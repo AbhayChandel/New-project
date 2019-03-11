@@ -10,10 +10,7 @@ pipeline {
         stage('prepare code'){
             steps{     
             sh "sed -i 's/-SNAPSHOT//g' pom.xml"
-            sh "git tag"
-            sh "git tag 1.0.0"
-            sh "git tag -d 1.0.0"
-            sh "git tag"
+            sh "git status"
             }
         }
         stage('clean & build'){
