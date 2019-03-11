@@ -11,18 +11,13 @@ pipeline {
         )
     }
     stages {
-        stage('git'){
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/develop']],
-     userRemoteConfigs: [[url: 'https://github.com/AbhayChandel/New-project.git']]])
-            }
-        }
+        
         stage('prepare code'){
             steps{
                 
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 //withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) {
-                withCredentials([usernamePassword(credentialsId: 'jenkins-user-for-devon4j-github', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR')]) {
+                //withCredentials([usernamePassword(credentialsId: 'jenkins-user-for-devon4j-github', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR')]) {
                        //sh("git tag -a some_tag -m 'Jenkins'")
                        //sh('git push git://${GIT_USERNAME}:${GIT_PASSWORD}@bitbucket.org:myproj.git')
                     sh "git add pom.xml"
@@ -30,7 +25,7 @@ pipeline {
                     //sh "git tag -a release/1.0.0 -m '#${params.ReleaseIssue}: tagged 1.0.0'"
                     //sh "git tag"
                     //sh "git checkout release/1.0.0"
-                }
+                //}
             }
         }
         stage('clean & build'){
