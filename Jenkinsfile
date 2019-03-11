@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('git'){
             steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']],
+                checkout([$class: 'GitSCM', branches: [[name: '*/develop']],
      userRemoteConfigs: [[url: 'https://github.com/AbhayChandel/New-project.git']]])
             }
         }
