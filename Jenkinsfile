@@ -12,12 +12,7 @@ pipeline {
             sh "sed -i 's/-SNAPSHOT//g' pom.xml"
             }
         }
-        stage('clean') { 
-            steps { 
-                sh "mvn clean"
-            }
-        }
-        stage('build'){
+        stage('clean & build'){
             steps{
                 sh "mvn clean package"
             }
