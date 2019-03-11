@@ -7,15 +7,15 @@ pipeline {
      userRemoteConfigs: [[url: 'https://github.com/AbhayChandel/New-project.git']]])
             }
         }
+        stage('prepare code'){
+            steps{     
+            sh "sed -i 's/-SNAPSHOT//g' pom.xml"
+            }
+        }
         stage('clean') { 
             steps { 
                 sh "mvn clean"
             }
-        }
-        stage('prepare code'){
-            steps{     
-            sh "sed -i 's/-SNAPSHOT//g' pom.xml"
-        }
         }
         stage('build'){
             steps{
