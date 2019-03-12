@@ -22,9 +22,9 @@ pipeline {
                 sh "git config user.email 'abhay.chandel@capgemini.com'"
             }
         }
-        stage('prepare code'){
+        /*stage('prepare code'){
             steps{
-                /*sh "sed -i 's/-SNAPSHOT//g' pom.xml"
+                sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 script{
                     releaseVersion = readMavenPom().getVersion()
                 }
@@ -34,9 +34,9 @@ pipeline {
                 sh "git commit -m '${params.ReleaseIssue}: Bump the version to release version ${releaseVersion} by removing the -SNAPSHOT'"
                 sh "git tag -a release/${releaseVersion} -m '#${params.ReleaseIssue}: tagged ${releaseVersion}'"
                 sh "git tag"
-                sh "git checkout release/${releaseVersion}"*/
+                sh "git checkout release/${releaseVersion}"
             }
-        }
+        }*/
         stage('clean & test'){
             steps{
                 sh "mvn clean test"
@@ -47,18 +47,18 @@ pipeline {
                 sh "mvn package"
             }
         }
-        stage('Merge To Feature Branch') { 
+        /*stage('Merge To Feature Branch') { 
             //when { equals expected: bugfix, actual: "${ReleaseType}" }
             //when{expression { params.ReleaseType == 'bugfix' }}
             steps {
                 // add configuration to set the version to next snapshot; decide on how to identify between
                 // feature and bugfix branch. And whether to set next snapshot as major or minor release.
                 echo 'Merging Bug fixed to develop branch.'
-                /*
+                
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) { 
                 sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:develop")
-                }*/
+                }
             }
-        }
+        }*/
     }
 }
