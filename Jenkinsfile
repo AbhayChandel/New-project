@@ -24,9 +24,11 @@ pipeline {
         }
         stage('prepare code'){
             steps{
-                releaseVersion = echo ${$VERSION/-SNAPSHOT/}
-                echo "${releaseVersion}"
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
+                script{
+                    releaseVersion = readMavenPom().getVersion()
+                }
+                echo "releaseVersion: ${releaseVersion}"
                 //version = readMavenPom().getVersion()
                 //echo "${version}"
                     //sh "git add pom.xml"
