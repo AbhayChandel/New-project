@@ -25,17 +25,13 @@ pipeline {
             steps{
                 echo "${VERSION}"
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
-                //withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) {
-                       //sh('git push git://${GIT_USERNAME}:${GIT_PASSWORD}@bitbucket.org:myproj.git')
-                    //env.pom = readMavenPom file: 'pom.xml'
-                    sh "mvn --version"
-                    
+                VERSION = readMavenPom().getVersion()
+                echo "${VERSION}"
                     //sh "git add pom.xml"
                     //sh "git commit -m '${params.ReleaseIssue}: Bump the version to release version by removing the -SNAPSHOT'"
                     //sh "git tag -a release/1.0.0 -m '#${params.ReleaseIssue}: tagged 1.0.0'"
                     //sh "git tag"
                     //sh "git checkout release/1.0.0"
-               // }
             }
         }
         stage('clean & deploy'){
@@ -50,7 +46,7 @@ pipeline {
             steps {
                 echo 'Merging Bug fixed to develop branch.'
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) { 
-                sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:develop")
+                //sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:develop")
                 }
             }
         }
