@@ -28,9 +28,9 @@ pipeline {
                        //sh('git push git://${GIT_USERNAME}:${GIT_PASSWORD}@bitbucket.org:myproj.git')
                     //env.pom = readMavenPom file: 'pom.xml'
                     script {
-                         pom_version = readMavenPom().getVersion()
-                         echo pom_version
+                         pom_version = readMavenPom().version
                     }
+                    echo("pom_version=${pom_version}")
                     
                     //sh "git add pom.xml"
                     //sh "git commit -m '${params.ReleaseIssue}: Bump the version to release version by removing the -SNAPSHOT'"
