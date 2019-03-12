@@ -2,7 +2,8 @@ def pom_version = "UNINTIALIZED"
 pipeline { 
     agent any
     environment {
-                GITHUB_DEVON4J_CREDENTIALS = credentials('jenkins-user-for-devon4j-github')
+             GITHUB_DEVON4J_CREDENTIALS = credentials('jenkins-user-for-devon4j-github')
+             VERSION = readMavenPom().getVersion()
     }
     parameters{
         string(
@@ -22,13 +23,12 @@ pipeline {
         }
         stage('prepare code'){
             steps{
-                
+                echo "${VERSION}"
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 //withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) {
                        //sh('git push git://${GIT_USERNAME}:${GIT_PASSWORD}@bitbucket.org:myproj.git')
                     //env.pom = readMavenPom file: 'pom.xml'
                     sh "mvn --version"
-                    sh "echo ${POM_VERSION}"
                     
                     //sh "git add pom.xml"
                     //sh "git commit -m '${params.ReleaseIssue}: Bump the version to release version by removing the -SNAPSHOT'"
