@@ -22,7 +22,9 @@ pipeline {
         }
         stage('prepare code'){
             steps{
+                script{
                 def VERSION = readMavenPom().getVersion()
+                }
                 echo "${VERSION}"
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 VERSION = readMavenPom().getVersion()
