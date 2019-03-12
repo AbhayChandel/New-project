@@ -1,4 +1,3 @@
-def pom_version = "UNINTIALIZED"
 pipeline { 
     agent any
     environment {
@@ -25,7 +24,7 @@ pipeline {
             steps{
                 echo "${VERSION}"
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
-                VERSION = readMavenPom().getVersion()
+                env.VERSION = readMavenPom().getVersion()
                 echo "${VERSION}"
                     //sh "git add pom.xml"
                     //sh "git commit -m '${params.ReleaseIssue}: Bump the version to release version by removing the -SNAPSHOT'"
