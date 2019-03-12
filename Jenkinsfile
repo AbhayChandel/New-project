@@ -24,7 +24,7 @@ pipeline {
         }
         stage('prepare code'){
             steps{
-                sh "releaseVersion = echo ${$VERSION/-SNAPSHOT/}"
+                releaseVersion = echo ${$VERSION/-SNAPSHOT/}
                 echo "${releaseVersion}"
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 //version = readMavenPom().getVersion()
