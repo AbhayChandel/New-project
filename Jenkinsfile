@@ -11,7 +11,7 @@ pipeline {
         )
     }
     stages {
-        stage('clone'){
+        stage('Checkout SCM'){
             steps{
                 checkout([$class: 'GitSCM', branches: [[name: '*/develop']],
      userRemoteConfigs: [[url: 'https://github.com/AbhayChandel/New-project.git']]])
@@ -25,8 +25,8 @@ pipeline {
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 //withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) {
                        //sh('git push git://${GIT_USERNAME}:${GIT_PASSWORD}@bitbucket.org:myproj.git')
-                    def pom = readMavenPom file: 'pom.xml'
-                    sh "echo ${pom.version}"
+                    //env.pom = readMavenPom file: 'pom.xml'
+                    sh "echo ${POM_VERSION}"
                     //sh "git add pom.xml"
                     //sh "git commit -m '${params.ReleaseIssue}: Bump the version to release version by removing the -SNAPSHOT'"
                     //sh "git tag -a release/1.0.0 -m '#${params.ReleaseIssue}: tagged 1.0.0'"
