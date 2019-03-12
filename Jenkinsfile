@@ -50,7 +50,7 @@ pipeline {
                 //sh "git remote add origin 'git@github.com:AbhayChandel/New-project.git'"
                 //sh "git remote set-url origin git@github.com:AbhayChandel/New-project.git"
                 //sh "git push origin HEAD:develop" 
-                sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git")
+                sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:develop")
                 //sh('git push git://${GITHUB_DEVON4J_CREDENTIALS_USR}:${GITHUB_DEVON4J_CREDENTIALS_PSW}github.com:AbhayChandel/New-project.git HEAD:develop') 
                 }
             }
