@@ -15,7 +15,7 @@ pipeline {
             steps{
                 checkout([$class: 'GitSCM', branches: [[name: '*/develop']],
      userRemoteConfigs: [[url: 'https://github.com/AbhayChandel/New-project.git']]])
-                sh "git config user.name 'Abhay Chandel'"
+                sh "git config user.name 'AbhayChandel'"
                 sh "git config user.email 'abhay.chandel@capgemini.com'"
             }
         }
