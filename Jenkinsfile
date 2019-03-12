@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
              GITHUB_DEVON4J_CREDENTIALS = credentials('jenkins-user-for-devon4j-github')
-             def VERSION = readMavenPom().getVersion()
+             //VERSION = readMavenPom().getVersion()
     }
     parameters{
         string(
@@ -22,6 +22,7 @@ pipeline {
         }
         stage('prepare code'){
             steps{
+                def VERSION = readMavenPom().getVersion()
                 echo "${VERSION}"
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 VERSION = readMavenPom().getVersion()
