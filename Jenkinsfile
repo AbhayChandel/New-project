@@ -1,8 +1,10 @@
+def pomVersion = 'UNKNOWN'
 pipeline { 
     agent any
     environment {
              GITHUB_DEVON4J_CREDENTIALS = credentials('jenkins-user-for-devon4j-github')
              VERSION = readMavenPom().getVersion()
+             RELEASE_VERSION = echo ${VERSION/-SNAPSHOT/}
     }
     parameters{
         string(
@@ -11,7 +13,6 @@ pipeline {
             defaultValue: ''
         )
     }
-    def version = env.VERSION
     stages {
         stage('Checkout SCM'){
             steps{
@@ -23,10 +24,10 @@ pipeline {
         }
         stage('prepare code'){
             steps{
-                echo "${version}"
+                echo "${RELEASE_VERSION}"
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
-                version = readMavenPom().getVersion()
-                echo "${version}"
+                //version = readMavenPom().getVersion()
+                //echo "${version}"
                     //sh "git add pom.xml"
                     //sh "git commit -m '${params.ReleaseIssue}: Bump the version to release version by removing the -SNAPSHOT'"
                     //sh "git tag -a release/1.0.0 -m '#${params.ReleaseIssue}: tagged 1.0.0'"
