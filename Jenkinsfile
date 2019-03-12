@@ -1,10 +1,10 @@
-def pomVersion = 'UNKNOWN'
+def releaseVersion = 'UNKNOWN'
 pipeline { 
     agent any
     environment {
              GITHUB_DEVON4J_CREDENTIALS = credentials('jenkins-user-for-devon4j-github')
              VERSION = readMavenPom().getVersion()
-             RELEASE_VERSION = echo ${VERSION/-SNAPSHOT/}
+             
     }
     parameters{
         string(
@@ -24,7 +24,8 @@ pipeline {
         }
         stage('prepare code'){
             steps{
-                echo "${RELEASE_VERSION}"
+                sh "releaseVersion = echo ${$VERSION/-SNAPSHOT/}"
+                echo "${releaseVersion}"
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 //version = readMavenPom().getVersion()
                 //echo "${version}"
