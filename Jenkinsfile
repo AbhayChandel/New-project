@@ -27,10 +27,8 @@ pipeline {
                 //withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) {
                        //sh('git push git://${GIT_USERNAME}:${GIT_PASSWORD}@bitbucket.org:myproj.git')
                     //env.pom = readMavenPom file: 'pom.xml'
-                    script {
-                         pom_version = readMavenPom().version
-                    }
-                    echo("pom_version=${pom_version}")
+                    sh "mvn --version"
+                    sh "echo ${POM_VERSION}"
                     
                     //sh "git add pom.xml"
                     //sh "git commit -m '${params.ReleaseIssue}: Bump the version to release version by removing the -SNAPSHOT'"
