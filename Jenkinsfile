@@ -45,7 +45,8 @@ pipeline {
             steps {
                 echo 'Merging Bug fixed to develop branch.'
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) {
-                sh " git push origin HEAD:develop" 
+                sh "git remote -v"
+                sh "git push origin HEAD:develop" 
                 //sh('git push git://${GITHUB_DEVON4J_CREDENTIALS_USR}:${GITHUB_DEVON4J_CREDENTIALS_PSW}github.com:AbhayChandel/New-project.git HEAD:develop') 
                 }
             }
