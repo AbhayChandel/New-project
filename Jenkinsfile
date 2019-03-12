@@ -2,19 +2,22 @@ def releaseVersion = 'UNKNOWN'
 pipeline { 
     agent any
     environment {
+        
              GITHUB_DEVON4J_CREDENTIALS = credentials('jenkins-user-for-devon4j-github')
+             
+             NEXUS3_CREDENTIALS = credentials('1c3a14a4-aa14-487c-b2b5-742675deef39')
              // This can be removed as it is not being used 
-             VERSION = readMavenPom().getVersion()
+             /*VERSION = readMavenPom().getVersion()
              // This can be nexus3 or nexus2
              NEXUS_VERSION = "nexus3"
              // This can be http or https
              NEXUS_PROTOCOL = "http"
              // Where your Nexus is running
-             NEXUS_URL = "172.17.0.3:8081"
+             NEXUS_URL = "127.0.0.1:8081"
              // Repository where we will upload the artifact
-             NEXUS_REPOSITORY = "repository-example"
+             NEXUS_REPOSITORY = "maven-snapshots"
              // Jenkins credential id to authenticate to Nexus OSS
-             NEXUS_CREDENTIAL_ID = "nexus-credentials"               
+             NEXUS_CREDENTIAL_ID = "1c3a14a4-aa14-487c-b2b5-742675deef39"*/            
     }
     parameters{
         string(
@@ -52,9 +55,14 @@ pipeline {
                 sh "mvn clean test"
             }
         }
-        stage('package & publish'){
+        /*stage('package & publish'){
             steps{
                 sh "mvn package"
+            }
+        }*/
+        stage('publish to nexus'){
+            steps{
+                
             }
         }
         /*stage('Merge To Feature Branch') { 
