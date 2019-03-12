@@ -55,12 +55,12 @@
   </dependencies>
   <distributionManagement>
     <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      <id>nexus3</id>
+      <url>https://devon.s2-eu.capgemini.com/nexus3/repository/maven-snapshots/</url>
     </snapshotRepository>
     <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <id>nexus3</id>
+      <url>https://devon.s2-eu.capgemini.com/nexus3/repository/maven-releases/</url>
     </repository>
   </distributionManagement
 </project>
