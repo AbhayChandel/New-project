@@ -53,7 +53,7 @@
   		<version>4.0.0-b01</version>
   	</dependency>
   </dependencies>
-  <distributionManagement>
+  <!--<distributionManagement>
     <snapshotRepository>
       <id>nexusonpl</id>
       <url>https://devon.s2-eu.capgemini.com/nexus3/repository/maven-snapshots/</url>
@@ -62,5 +62,17 @@
       <id>nexusonpl</id>
       <url>https://devon.s2-eu.capgemini.com/nexus3/repository/maven-releases/</url>
     </repository>
-  </distributionManagement>
+  </distributionManagement>-->
+  <distributionManagement>
+    <repository>
+      <id>pl-nexus</id>
+      <name>PL Releases</name>
+      <url>http://nexus3-core:8081/nexus3/repository/maven-releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>pl-nexus</id>
+      <name>PL Snapshots</name>
+      <url>http://nexus3-core:8081/nexus3/repository/maven-snapshots</url>
+    </snapshotRepository>
+</distributionManagement>
 </project>
