@@ -4,8 +4,6 @@ pipeline {
     environment {
         
              GITHUB_DEVON4J_CREDENTIALS = credentials('jenkins-user-for-devon4j-github')
-             
-             NEXUS3_CREDENTIALS = credentials('1c3a14a4-aa14-487c-b2b5-742675deef39')
              // This can be removed as it is not being used 
              /*VERSION = readMavenPom().getVersion()
              // This can be nexus3 or nexus2
