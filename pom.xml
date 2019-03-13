@@ -55,11 +55,11 @@
   </dependencies>
   <distributionManagement>
     <snapshotRepository>
-      <id>nexus3</id>
+      <id>nexusonpl</id>
       <url>https://devon.s2-eu.capgemini.com/nexus3/repository/maven-snapshots/</url>
     </snapshotRepository>
     <repository>
-      <id>nexus3</id>
+      <id>nexusonpl</id>
       <url>https://devon.s2-eu.capgemini.com/nexus3/repository/maven-releases/</url>
     </repository>
   </distributionManagement>
