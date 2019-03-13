@@ -64,7 +64,7 @@ pipeline {
                       sh "mvn clean install"
                     sh "mvn help:effective-settings"
                     //sh "mvn -gs $MAVEN_SETTINGS -e -X deploy"
-                     sh "mvn -gs -e -X deploy"
+                     sh "mvn -e -X deploy"
                 }
                 /*configFileProvider([configFile(fileId: '44eaa7a2-d003-4348-b6b4-a61fd967e2ca', variable: 'MAVEN_SETTINGS')]) {
                     sh "mvn clean install"
