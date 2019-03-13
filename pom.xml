@@ -56,7 +56,7 @@
   <distributionManagement>
     <snapshotRepository>
       <id>nexusonpl</id>
-      <url>https://devon.s2-eu.capgemini.com/nexus3/repository/snapshots/</url>
+      <url>https://devon.s2-eu.capgemini.com/nexus3/repository/maven-snapshots/</url>
     </snapshotRepository>
     <repository>
       <id>nexusonpl</id>
