@@ -62,7 +62,9 @@ pipeline {
         }*/
         stage('publish to nexus'){
             steps{
-                sh "mvn deploy"
+                configFileProvider([configFile(fileId: 'b118b802-e730-4a7a-b68f-dd07011173b4', variable: 'MAVEN_SETTINGS')]) {
+                    sh 'mvn -s $MAVEN_SETTINGS deploy'
+                }
             }
         }
         /*stage('Merge To Feature Branch') { 
