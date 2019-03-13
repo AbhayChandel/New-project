@@ -62,7 +62,7 @@ pipeline {
         }*/
         stage('publish to nexus'){
             steps{
-                
+                sh "mvn deploy"
             }
         }
         /*stage('Merge To Feature Branch') { 
