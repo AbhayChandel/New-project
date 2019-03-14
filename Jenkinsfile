@@ -50,6 +50,7 @@ pipeline {
         stage('sign artifacts'){
             withCredentials([file(credentialsId: '39336dcb-5be1-4996-b6a2-13f666614fda', variable: 'KEYRING')]) {
             sh 'gpg --batch --import "${KEYRING}"'
+            }
         }
         /*stage('publish to nexus'){
             steps{
