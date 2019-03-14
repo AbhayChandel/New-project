@@ -49,7 +49,7 @@ pipeline {
         }*/
         stage('sign artifacts'){
             steps{
-                withCredentials([file(credentialsId: 'f3208975-836a-41cc-af6c-b592dc03f520', variable: 'KEYRING')]) {
+                withCredentials([string(credentialsId: '81f5100b-10f5-43fc-bccd-0529694c3e98', variable: 'KEYRING')]) {
                 sh 'gpg --batch --import "${KEYRING}"'
                }
             }
