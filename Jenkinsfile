@@ -49,9 +49,11 @@ pipeline {
             steps{
                 withCredentials([file(credentialsId: '488de859-db5e-49f3-abe2-04bc5ae2c2db', variable: 'KEYRING')]) {
                 //sh 'gpg --batch --import "${KEYRING}"'
-                sh 'export GPG_TTY=$(tty)'
-                sh 'gpg --import "${KEYRING}"'
-                sh 'mvn clean verify'
+                  sh 'export GPG_TTY=$(tty)'
+                  sh 'gpg --import "${KEYRING}"'
+                  configFileProvider([configFile(fileId: '44eaa7a2-d003-4348-b6b4-a61fd967e2ca', variable: 'MAVEN_SETTINGS')]) {
+                    sh "mvn -gs $MAVEN_SETTINGS -e -X clean verify"
+                  }
                }
             }
         }
