@@ -18,6 +18,8 @@ pipeline {
      userRemoteConfigs: [[url: 'https://github.com/AbhayChandel/New-project.git']]])
                 sh "git config user.name 'AbhayChandel'"
                 sh "git config user.email 'abhay.chandel@capgemini.com'"
+                sh "gpg --version"
+                sh "gpg2 --version"
             }
         }
         /*stage('prepare code'){
@@ -45,13 +47,13 @@ pipeline {
                 sh "mvn package"
             }
         }*/
-        stage('publish to nexus'){
+        /*stage('publish to nexus'){
             steps{
                 configFileProvider([configFile(fileId: '44eaa7a2-d003-4348-b6b4-a61fd967e2ca', variable: 'MAVEN_SETTINGS')]) {
                     sh "mvn -gs $MAVEN_SETTINGS -e -X deploy"
                 }
             }
-        }
+        }*/
         /*stage('Merge To Feature Branch') { 
             //when { equals expected: bugfix, actual: "${ReleaseType}" }
             //when{expression { params.ReleaseType == 'bugfix' }}
