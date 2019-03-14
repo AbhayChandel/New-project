@@ -51,6 +51,7 @@ pipeline {
                 //sh 'gpg --batch --import "${KEYRING}"'
                   sh 'export GPG_TTY=$(tty)'
                   sh 'gpg --import "${KEYRING}"'
+                  sh 'for fpr in $(gpg --list-keys --with-colons  | awk -F: \'/fpr:/ {print $10}\' | sort -u); do echo -e "5\ny\n" |  gpg --batch --command-fd 0 --expert --edit-key ${fpr} trust; done'
                   configFileProvider([configFile(fileId: '44eaa7a2-d003-4348-b6b4-a61fd967e2ca', variable: 'MAVEN_SETTINGS')]) {
                     sh "mvn -gs $MAVEN_SETTINGS -e -X clean verify"
                   }
