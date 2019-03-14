@@ -50,6 +50,7 @@ pipeline {
                 withCredentials([file(credentialsId: '488de859-db5e-49f3-abe2-04bc5ae2c2db', variable: 'KEYRING')]) {
                 //sh 'gpg --batch --import "${KEYRING}"'
                 sh 'gpg --import "${KEYRING}"'
+                sh 'export GPG_TTY=$(tty)'
                 sh 'mvn clean verify'
                }
             }
