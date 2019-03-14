@@ -3,19 +3,7 @@ pipeline {
     agent any
     environment {
         
-             GITHUB_DEVON4J_CREDENTIALS = credentials('jenkins-user-for-devon4j-github')
-             // This can be removed as it is not being used 
-             /*VERSION = readMavenPom().getVersion()
-             // This can be nexus3 or nexus2
-             NEXUS_VERSION = "nexus3"
-             // This can be http or https
-             NEXUS_PROTOCOL = "http"
-             // Where your Nexus is running
-             NEXUS_URL = "127.0.0.1:8081"
-             // Repository where we will upload the artifact
-             NEXUS_REPOSITORY = "maven-snapshots"
-             // Jenkins credential id to authenticate to Nexus OSS
-             NEXUS_CREDENTIAL_ID = "1c3a14a4-aa14-487c-b2b5-742675deef39"*/            
+             GITHUB_DEVON4J_CREDENTIALS = credentials('jenkins-user-for-devon4j-github')           
     }
     parameters{
         string(
@@ -60,17 +48,17 @@ pipeline {
         }*/
         stage('publish to nexus'){
             steps{
-                withMaven(globalMavenSettingsConfig:'44eaa7a2-d003-4348-b6b4-a61fd967e2ca') {
+                /*withMaven(globalMavenSettingsConfig:'44eaa7a2-d003-4348-b6b4-a61fd967e2ca') {
                       sh "mvn clean install"
                     sh "mvn help:effective-settings"
                     //sh "mvn -gs $MAVEN_SETTINGS -e -X deploy"
                      sh "mvn -e -X deploy"
-                }
-                /*configFileProvider([configFile(fileId: '44eaa7a2-d003-4348-b6b4-a61fd967e2ca', variable: 'MAVEN_SETTINGS')]) {
-                    sh "mvn clean install"
-                    sh "mvn help:effective-settings"
-                    sh "mvn -gs $MAVEN_SETTINGS -e -X deploy"
                 }*/
+                configFileProvider([configFile(fileId: '44eaa7a2-d003-4348-b6b4-a61fd967e2ca', variable: 'MAVEN_SETTINGS')]) {
+                    //sh "mvn clean install"
+                    //sh "mvn help:effective-settings"
+                    sh "mvn -gs $MAVEN_SETTINGS -e -X deploy"
+                }
             }
         }
         /*stage('Merge To Feature Branch') { 
