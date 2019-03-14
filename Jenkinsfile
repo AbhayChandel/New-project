@@ -47,6 +47,10 @@ pipeline {
                 sh "mvn package"
             }
         }*/
+        stage('sign artifacts'){
+            withCredentials([file(credentialsId: '39336dcb-5be1-4996-b6a2-13f666614fda', variable: 'KEYRING')]) {
+            sh 'gpg --batch --import "${KEYRING}"'
+        }
         /*stage('publish to nexus'){
             steps{
                 configFileProvider([configFile(fileId: '44eaa7a2-d003-4348-b6b4-a61fd967e2ca', variable: 'MAVEN_SETTINGS')]) {
