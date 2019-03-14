@@ -24,6 +24,20 @@
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.6</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -53,16 +67,6 @@
   		<version>4.0.0-b01</version>
   	</dependency>
   </dependencies>
-  <!--<distributionManagement>
-    <snapshotRepository>
-      <id>nexusonpl</id>
-      <url>https://devon.s2-eu.capgemini.com/nexus3/repository/maven-snapshots/</url>
-    </snapshotRepository>
-    <repository>
-      <id>nexusonpl</id>
-      <url>https://devon.s2-eu.capgemini.com/nexus3/repository/maven-releases/</url>
-    </repository>
-  </distributionManagement>-->
   <distributionManagement>
     <repository>
       <id>pl-nexus</id>
