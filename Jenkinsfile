@@ -49,7 +49,7 @@ pipeline {
             steps{
                 withCredentials([file(credentialsId: '850ce103-c928-487a-9dd9-0d494194254c', variable: 'KEYRING')]) {
                 sh 'gpg --no-tty --batch --import "${KEYRING}"'
-                sh 'for fpr in $(gpg --list-keys --with-colons  | awk -F: \'/fpr:/ {print $10}\' | sort -u); do echo -e "5\ny\n" |  gpg --batch --command-fd 0 --expert --edit-key ${fpr} trust; done'
+                sh 'for fpr in $(gpg --list-keys --with-colons  | awk -F: \'/fpr:/ {print $10}\' | sort -u); do echo -e "5\ny\n" |  gpg --batch --no-tty --command-fd 0 --expert --edit-key ${fpr} trust; done'
                     //sh 'export GPG_TTY=$(tty)'
                   
                   
