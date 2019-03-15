@@ -51,8 +51,8 @@ pipeline {
                 sh 'gpg --batch --import "${KEYRING}"'
                 sh 'for fpr in $(gpg --list-keys --with-colons  | awk -F: \'/fpr:/ {print $10}\' | sort -u); do echo -e "5\ny\n" |  gpg --batch --command-fd 0 --expert --edit-key ${fpr} trust; done'
                   
-                  configFileProvider([configFile(fileId: '44eaa7a2-d003-4348-b6b4-a61fd967e2ca', variable: 'MAVEN_SETTINGS')]) {
-                    sh "mvn -gs $MAVEN_SETTINGS -Dgpg.passphrase=Govindsagar74 clean verify"
+                  configFileProvider([configFile(fileId: '3b7380ac-b999-4650-afc0-b7af994fdd7a', variable: 'MAVEN_SETTINGS')]) {
+                    sh "mvn -gs $MAVEN_SETTINGS clean verify"
                   }
                }
             }
