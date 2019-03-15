@@ -48,7 +48,7 @@ pipeline {
         stage('sign artifacts'){
             steps{
                 withCredentials([file(credentialsId: '488de859-db5e-49f3-abe2-04bc5ae2c2db', variable: 'KEYRING')]) {
-                sh 'gpg --batch  --import "${KEYRING}"'
+                sh 'gpg --batch --no-tty  --import "${KEYRING}"'
                 sh 'for fpr in $(gpg --list-keys --with-colons  | awk -F: \'/fpr:/ {print $10}\' | sort -u); do echo -e "5\ny\n" |  gpg --batch --command-fd 0 --expert --edit-key ${fpr} trust; done'
                     //sh 'export GPG_TTY=$(tty)'
                   
