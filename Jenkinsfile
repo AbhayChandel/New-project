@@ -40,7 +40,7 @@ pipeline {
                 sh "mvn clean package"
             }
         }
-        stage('Sign Artifacts with GPG'){
+        stage('Sign Artifacts'){
             steps{
                 withCredentials([file(credentialsId: '850ce103-c928-487a-9dd9-0d494194254c', variable: 'KEYRING')]) {
                 sh 'gpg --batch --import "${KEYRING}"'
@@ -58,18 +58,20 @@ pipeline {
                 }
             }
         }
+        stage('Release on GitHub'){
+            steps{
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) { 
+                    sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:develop ${releaseTag}")
+                }
+            }
+        }
         stage('Set Next Planned Release'){
             steps{
                 sh "sed -i 's/${releaseVersion}/${params.next_planned_release}-SNAPSHOT/g' pom.xml"
                 sh "git add pom.xml"
                 sh "git commit -m '${params.release_issue}: opened next snapshot version'"
-            }
-        }
-        stage('Push to Remote Repository'){
-            steps{
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) { 
-                sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:develop")
-                //sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:develop ${releaseTag}")
+                    sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:develop")
                 }
             }
         }
