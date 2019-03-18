@@ -6,8 +6,13 @@ pipeline {
     }
     parameters{
         string(
-            description: 'Issue number for release on devon4j Github',
-            name:'ReleaseIssue',
+            description: 'Issue number for current release on Github',
+            name:'release_issue',
+            defaultValue: ''
+        )
+        string(
+            description: 'Next planned release(without SNAPSHOT)',
+            name:'next_planned_release',
             defaultValue: ''
         )
     }
@@ -20,7 +25,7 @@ pipeline {
                 sh "git config user.email 'abhay.chandel@capgemini.com'"
             }
         }
-        /*stage('Prepare Code'){
+        stage('Prepare Code'){
             steps{
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 script{
@@ -29,18 +34,18 @@ pipeline {
                 echo "releaseVersion: ${releaseVersion}"
                 
                 sh "git add pom.xml"
-                sh "git commit -m '${params.ReleaseIssue}: Bump the version to release version ${releaseVersion} by removing the -SNAPSHOT'"
-                sh "git tag -a release/${releaseVersion} -m '#${params.ReleaseIssue}: tagged ${releaseVersion}'"
+                sh "git commit -m '${params.release_issue}: Bump the version to release version ${releaseVersion} by removing the -SNAPSHOT'"
+                sh "git tag -a release/${releaseVersion} -m '#${params.release_issue}: tagged ${releaseVersion}'"
                 sh "git tag"
                 sh "git checkout release/${releaseVersion}"
             }
-        }*/
+        }
         stage('Test & Package'){
             steps{
                 sh "mvn clean package"
             }
         }
-        stage('sign artifacts'){
+        stage('Sign Artifacts with GPG'){
             steps{
                 withCredentials([file(credentialsId: '850ce103-c928-487a-9dd9-0d494194254c', variable: 'KEYRING')]) {
                 sh 'gpg --batch --import "${KEYRING}"'
@@ -51,13 +56,27 @@ pipeline {
                }
             }
         }
-        /*stage('Publish to Nexus'){
+        stage('Publish to Nexus'){
             steps{
                 configFileProvider([configFile(fileId: '44eaa7a2-d003-4348-b6b4-a61fd967e2ca', variable: 'MAVEN_SETTINGS')]) {
                     sh "mvn -gs $MAVEN_SETTINGS -e -X deploy"
                 }
             }
-        }*/
+        }
+        stage('Set Next Planned Release'){
+            steps{
+                sh "sed -i 's/${releaseVersion}/${params.next_planned_release}/g' pom.xml"
+                sh "git add pom.xml"
+                sh "git commit -m '${params.release_issue}: opened next snapshot version'"
+            }
+        }
+        stage('Push to Remote Repository'){
+            steps{
+                withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) { 
+                sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:develop")
+                }
+            }
+        }
         /*stage('Merge To Feature Branch') { 
             //when { equals expected: bugfix, actual: "${ReleaseType}" }
             //when{expression { params.ReleaseType == 'bugfix' }}
