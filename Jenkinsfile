@@ -30,8 +30,7 @@ pipeline {
                     else{
                         releaseVersion = currentVersion.substring(0, indexOfSnapshot)
                         releaseTag = "release/" + releaseVersion
-                        //pom.setVersion(releaseVersion)
-                        pom.setVersion(params.next_planned_release + '-SNAPSHOT')
+                        pom.setVersion(releaseVersion)
                         writeMavenPom model: pom
                         println("version after bumping: " + readMavenPom().getVersion())
                     }
@@ -40,14 +39,14 @@ pipeline {
                 echo "releaseTag: ${releaseTag}"
                 echo "branch: ${env.BRANCH_NAME}"
                 
-                /*sh "git add pom.xml"
+                sh "git add pom.xml"
                 sh "git commit -m '${params.release_issue}: Bumped release version ${releaseVersion}'"
                 sh "git tag -a ${releaseTag} -m '#${params.release_issue}: tagged ${releaseVersion}'"
                 sh "git tag"
-                sh "git checkout ${releaseTag}"*/
+                sh "git checkout ${releaseTag}"
             }
         }
-        /*stage('Test & Package'){
+        stage('Test & Package'){
             steps{
                 sh "mvn clean package"
             }
@@ -81,7 +80,7 @@ pipeline {
             steps{
                 script{
                     Model pom = readMavenPom()
-                    pom.setVersion(${params.next_planned_release} + '-SNAPSHOT')
+                    pom.setVersion(params.next_planned_release + '-SNAPSHOT')
                     writeMavenPom model: pom
                 }
                 sh "git add pom.xml"
@@ -90,6 +89,6 @@ pipeline {
                     sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:${env.BRANCH_NAME}")
                 }
             }
-        }*/
+        }
     }
 }
