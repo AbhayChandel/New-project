@@ -76,7 +76,7 @@ pipeline {
                 }
             }
         }
-        stage('Set Next Planned Release'){
+        stage('Set Next Snapshot'){
             steps{
                 script{
                     Model pom = readMavenPom()
