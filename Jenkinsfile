@@ -23,7 +23,7 @@ pipeline {
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 script{
                     releaseVersion = readMavenPom().getVersion()
-                    releaseTag = release/releaseVersion
+                    releaseTag = "release/" + releaseVersion
                 }
                 echo "releaseVersion: ${releaseVersion}"
                 echo "releaseTag: ${releaseTag}"
