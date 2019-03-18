@@ -23,9 +23,9 @@ pipeline {
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 script{
                     releaseVersion = readMavenPom().getVersion()
+                    releaseTag = release/${releaseVersion}
                 }
                 echo "releaseVersion: ${releaseVersion}"
-                releaseTag = release/${releaseVersion}
                 echo "releaseTag: ${releaseTag}"
                 
                 sh "git add pom.xml"
