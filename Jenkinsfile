@@ -1,4 +1,5 @@
 def releaseVersion = 'UNKNOWN'
+def releaseTag = 'UNKNOWN'
 pipeline { 
     agent any
     environment {
@@ -24,6 +25,8 @@ pipeline {
                     releaseVersion = readMavenPom().getVersion()
                 }
                 echo "releaseVersion: ${releaseVersion}"
+                releaseTag = release/${releaseVersion}
+                echo "releaseTag: ${releaseTag}"
                 
                 sh "git add pom.xml"
                 sh "git commit -m '${params.release_issue}: Bump the version to release version ${releaseVersion} by removing the -SNAPSHOT'"
