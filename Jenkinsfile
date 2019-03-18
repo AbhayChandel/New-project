@@ -20,23 +20,32 @@ pipeline {
     stages {
         stage('Prepare Code'){
             steps{
-                sh "sed -i 's/-SNAPSHOT//g' pom.xml"
+                //sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 script{
-                    releaseVersion = readMavenPom().getVersion()
-                    releaseTag = "release/" + releaseVersion
+                    println("version read from pom" + readMavenPom().getVersion())
+                    currentVersion = readMavenPom().getVersion()
+                    int indexOfSnapshot = currentVersion.indexOf('-SNAPSHOT')
+                    if(indexOfSnapshot < 0){
+                    }
+                    else{
+                        releaseVersion = currentVersion.substring(0, indexOfSnapshot)
+                        releaseTag = "release/" + releaseVersion
+                        writeMavenPom.setVersion(releaseVersion)
+                        println("version written to pom" + readMavenPom().getVersion())
+                    }
                 }
                 echo "releaseVersion: ${releaseVersion}"
                 echo "releaseTag: ${releaseTag}"
                 echo "${env.BRANCH_NAME}"
-                
+                /*
                 sh "git add pom.xml"
                 sh "git commit -m '${params.release_issue}: Bump the version to release version ${releaseVersion} by removing the -SNAPSHOT'"
                 sh "git tag -a ${releaseTag} -m '#${params.release_issue}: tagged ${releaseVersion}'"
                 sh "git tag"
-                sh "git checkout ${releaseTag}"
+                sh "git checkout ${releaseTag}"*/
             }
         }
-        stage('Test & Package'){
+        /*stage('Test & Package'){
             steps{
                 sh "mvn clean package"
             }
@@ -75,6 +84,6 @@ pipeline {
                     sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:${env.BRANCH_NAME}")
                 }
             }
-        }
+        }*/
     }
 }
