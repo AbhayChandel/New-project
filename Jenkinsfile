@@ -25,17 +25,15 @@ pipeline {
                     Model pom = readMavenPom()
                     currentVersion = pom.getVersion()
                     println("version read from pom: " + currentVersion)
-                    //currentVersion = readMavenPom().getVersion()
                     int indexOfSnapshot = currentVersion.indexOf('-SNAPSHOT')
                     if(indexOfSnapshot < 0){
                     }
                     else{
                         releaseVersion = currentVersion.substring(0, indexOfSnapshot)
                         releaseTag = "release/" + releaseVersion
-                        pom.version = releaseVersion
-                        //writeMavenPom.(pom)
+                        pom.setVersion(releaseVersion)
                         writeMavenPom model: pom
-                        println("version written to pom" + readMavenPom().getVersion())
+                        println("version after bumping: " + readMavenPom().getVersion())
                     }
                 }
                 echo "releaseVersion: ${releaseVersion}"
