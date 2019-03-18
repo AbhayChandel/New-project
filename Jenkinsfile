@@ -38,16 +38,16 @@ pipeline {
                 }
                 echo "releaseVersion: ${releaseVersion}"
                 echo "releaseTag: ${releaseTag}"
-                echo "${env.BRANCH_NAME}"
-                /*
+                echo "branch: ${env.BRANCH_NAME}"
+                
                 sh "git add pom.xml"
                 sh "git commit -m '${params.release_issue}: Bump the version to release version ${releaseVersion} by removing the -SNAPSHOT'"
                 sh "git tag -a ${releaseTag} -m '#${params.release_issue}: tagged ${releaseVersion}'"
                 sh "git tag"
-                sh "git checkout ${releaseTag}"*/
+                sh "git checkout ${releaseTag}"
             }
         }
-        /*stage('Test & Package'){
+        stage('Test & Package'){
             steps{
                 sh "mvn clean package"
             }
@@ -79,7 +79,11 @@ pipeline {
         }
         stage('Set Next Planned Release'){
             steps{
-                sh "sed -i 's/${releaseVersion}/${params.next_planned_release}-SNAPSHOT/g' pom.xml"
+                script{
+                    Model pom = readMavenPom()
+                    pom.setVersion(${params.next_planned_release} + '-SNAPSHOT')
+                    writeMavenPom model: pom
+                }
                 sh "git add pom.xml"
                 sh "git commit -m '${params.release_issue}: opened next snapshot version'"
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) { 
