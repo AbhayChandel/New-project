@@ -17,14 +17,6 @@ pipeline {
         )
     }
     stages {
-        stage('Checkout SCM'){
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/develop']],
-     userRemoteConfigs: [[url: 'https://github.com/AbhayChandel/New-project.git']]])
-                sh "git config user.name 'AbhayChandel'"
-                sh "git config user.email 'abhay.chandel@capgemini.com'"
-            }
-        }
         stage('Prepare Code'){
             steps{
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
