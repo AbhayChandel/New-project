@@ -32,8 +32,9 @@ pipeline {
                     else{
                         releaseVersion = currentVersion.substring(0, indexOfSnapshot)
                         releaseTag = "release/" + releaseVersion
-                        pom.setVersion(releaseVersion)
-                        writeMavenPom.(pom)
+                        pom.version = releaseVersion
+                        //writeMavenPom.(pom)
+                        writeMavenPom model: pom
                         println("version written to pom" + readMavenPom().getVersion())
                     }
                 }
