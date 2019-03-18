@@ -65,7 +65,7 @@ pipeline {
         }
         stage('Set Next Planned Release'){
             steps{
-                sh "sed -i 's/${releaseVersion}/${params.next_planned_release}/g' pom.xml"
+                sh "sed -i 's/${releaseVersion}/${params.next_planned_release}-SNAPSHOT/g' pom.xml"
                 sh "git add pom.xml"
                 sh "git commit -m '${params.release_issue}: opened next snapshot version'"
             }
