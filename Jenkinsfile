@@ -22,15 +22,18 @@ pipeline {
             steps{
                 //sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 script{
-                    println("version read from pom" + readMavenPom().getVersion())
-                    currentVersion = readMavenPom().getVersion()
+                    Model pom = readMavenPom()
+                    currentVersion = pom.getVersion()
+                    println("version read from pom: " + currentVersion)
+                    //currentVersion = readMavenPom().getVersion()
                     int indexOfSnapshot = currentVersion.indexOf('-SNAPSHOT')
                     if(indexOfSnapshot < 0){
                     }
                     else{
                         releaseVersion = currentVersion.substring(0, indexOfSnapshot)
                         releaseTag = "release/" + releaseVersion
-                        writeMavenPom.setVersion(releaseVersion)
+                        pom.setVersion(releaseVersion)
+                        writeMavenPom.(pom)
                         println("version written to pom" + readMavenPom().getVersion())
                     }
                 }
