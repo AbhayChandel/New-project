@@ -90,6 +90,6 @@ pipeline {
                     sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:${env.BRANCH_NAME}")
                 }
             }
-        }*/
+        }
     }
 }
