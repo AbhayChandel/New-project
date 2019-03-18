@@ -25,7 +25,7 @@ pipeline {
                 sh "git config user.email 'abhay.chandel@capgemini.com'"
             }
         }
-        /*stage('Prepare Code'){
+        stage('Prepare Code'){
             steps{
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 script{
@@ -76,7 +76,7 @@ pipeline {
                 sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:develop")
                 }
             }
-        }*/
+        }
         /*stage('Merge To Feature Branch') { 
             //when { equals expected: bugfix, actual: "${ReleaseType}" }
             //when{expression { params.ReleaseType == 'bugfix' }}
