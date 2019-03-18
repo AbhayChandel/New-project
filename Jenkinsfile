@@ -20,7 +20,7 @@ pipeline {
                 sh "git config user.email 'abhay.chandel@capgemini.com'"
             }
         }
-        /*stage('prepare code'){
+        /*stage('Prepare Code'){
             steps{
                 sh "sed -i 's/-SNAPSHOT//g' pom.xml"
                 script{
@@ -35,16 +35,11 @@ pipeline {
                 sh "git checkout release/${releaseVersion}"
             }
         }*/
-        stage('clean & test'){
+        stage('Test & Package'){
             steps{
-                sh "mvn clean test"
+                sh "mvn clean package"
             }
         }
-        /*stage('package & publish'){
-            steps{
-                sh "mvn package"
-            }
-        }*/
         stage('sign artifacts'){
             steps{
                 withCredentials([file(credentialsId: '850ce103-c928-487a-9dd9-0d494194254c', variable: 'KEYRING')]) {
@@ -56,7 +51,7 @@ pipeline {
                }
             }
         }
-        /*stage('publish to nexus'){
+        /*stage('Publish to Nexus'){
             steps{
                 configFileProvider([configFile(fileId: '44eaa7a2-d003-4348-b6b4-a61fd967e2ca', variable: 'MAVEN_SETTINGS')]) {
                     sh "mvn -gs $MAVEN_SETTINGS -e -X deploy"
