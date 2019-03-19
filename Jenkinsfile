@@ -17,6 +17,10 @@ pipeline {
             defaultValue: ''
         )
     }
+    /* ToDos
+    1. Validate parameters.
+    2. Throw exception if parameters are invalid.
+    */
     stages {
         stage('Prepare Code'){
             steps{
@@ -39,14 +43,14 @@ pipeline {
                 echo "releaseTag: ${releaseTag}"
                 echo "branch: ${env.BRANCH_NAME}"
                 
-                sh "git add pom.xml"
+                /*sh "git add pom.xml"
                 sh "git commit -m '${params.release_issue}: Bumped release version ${releaseVersion}'"
                 sh "git tag -a ${releaseTag} -m '#${params.release_issue}: tagged ${releaseVersion}'"
                 sh "git tag"
-                sh "git checkout ${releaseTag}"
+                sh "git checkout ${releaseTag}"*/
             }
         }
-        stage('Test & Package'){
+        /*stage('Test & Package'){
             steps{
                 sh "mvn clean package"
             }
@@ -89,6 +93,6 @@ pipeline {
                     sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:${env.BRANCH_NAME}")
                 }
             }
-        }
+        }*/
     }
 }
