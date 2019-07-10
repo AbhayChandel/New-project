@@ -1,5 +1,6 @@
 def releaseVersion = 'UNKNOWN'
 def releaseTag = 'UNKNOWN'
+def repoPath = 'github.com/AbhayChandel/New-project.git'
 pipeline { 
     agent any
     environment {
@@ -88,7 +89,7 @@ pipeline {
         stage('Release on GitHub'){
             steps{
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) { 
-                    sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:${env.BRANCH_NAME} ${releaseTag}")
+                    sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@${repoPath} HEAD:${env.BRANCH_NAME} ${releaseTag}")
                 }
             }
         }
@@ -102,7 +103,7 @@ pipeline {
                 sh "git add pom.xml"
                 sh "git commit -m '${params.release_issue}: opened next snapshot version'"
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) { 
-                    sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@github.com/AbhayChandel/New-project.git HEAD:${env.BRANCH_NAME}")
+                    sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@${repoPath} HEAD:${env.BRANCH_NAME}")
                 }
             }
         }*/
