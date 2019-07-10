@@ -17,11 +17,17 @@ pipeline {
             defaultValue: ''
         )
     }
-    /* ToDos
-    1. Validate parameters.
-    2. Throw exception if parameters are invalid.
-    */
     stages {
+        stage('Validate User Input'){
+            steps{
+                script{
+                    if ("${params.release_issue}" == "" || ${params.next_planned_release}" == "") {
+                        currentBuild.result = 'ABORTED'
+                        error('User Input missing !!!')
+                    }
+                }
+            }
+        }
         stage('Prepare Code'){
             steps{
                 script{
