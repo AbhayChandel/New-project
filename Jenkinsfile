@@ -21,9 +21,13 @@ pipeline {
         stage('Validate User Input'){
             steps{
                 script{
-                    if ("${params.release_issue}" == "" || "${params.next_planned_release}" == "") {
+                    if ("${params.release_issue}" == "") {
                         currentBuild.result = 'ABORTED'
-                        error('User Input missing !!!')
+                        error('User Input release_issue is missing !!!')
+                    }
+                     if ("${params.next_planned_release}" == "") {
+                        currentBuild.result = 'ABORTED'
+                        error('User Input next_planned_release is missing !!!')
                     }
                 }
             }
