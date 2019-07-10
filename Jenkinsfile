@@ -103,7 +103,7 @@ pipeline {
                     writeMavenPom model: pom
                 }
                 sh "git add pom.xml"
-                sh "git commit -m '${params.release_issue}: opened next snapshot version'"
+                sh "git commit -m '${params.release_issue}: opened next snapshot version for ${params.next_planned_release}'"
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) { 
                     sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@${repoPath} HEAD:${env.BRANCH_NAME}")
                 }
