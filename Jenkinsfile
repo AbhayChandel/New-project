@@ -29,6 +29,8 @@ pipeline {
                         currentBuild.result = 'ABORTED'
                         error('User Input next_planned_release is missing !!!')
                     }
+                    echo "release_issue: ${params.release_issue}"
+                    echo "next_planned_release: ${params.next_planned_release}"
                 }
             }
         }
