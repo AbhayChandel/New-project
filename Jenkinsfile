@@ -56,6 +56,8 @@ pipeline {
                 echo "releaseTag: ${releaseTag}"
                 echo "branch: ${env.BRANCH_NAME}"
                 
+                sh "git config user.name 'AbhayChandel'"
+                sh "git config user.email 'abhay1072@gmail.com'"
                 sh "git add pom.xml"
                 sh "git commit -m '${params.release_issue}: Bumped release version ${releaseVersion}'"
                 sh "git tag -a ${releaseTag} -m '#${params.release_issue}: tagged ${releaseVersion}'"
