@@ -56,14 +56,14 @@ pipeline {
                 echo "releaseTag: ${releaseTag}"
                 echo "branch: ${env.BRANCH_NAME}"
                 
-                /*sh "git add pom.xml"
+                sh "git add pom.xml"
                 sh "git commit -m '${params.release_issue}: Bumped release version ${releaseVersion}'"
                 sh "git tag -a ${releaseTag} -m '#${params.release_issue}: tagged ${releaseVersion}'"
                 sh "git tag"
-                sh "git checkout ${releaseTag}"*/
+                sh "git checkout ${releaseTag}"
             }
         }
-        /*stage('Test & Package'){
+        stage('Test & Package'){
             steps{
                 sh "mvn clean package"
             }
@@ -79,13 +79,13 @@ pipeline {
                }
             }
         }
-        stage('Publish to Nexus'){
+        /*stage('Publish to Nexus'){
             steps{
                 configFileProvider([configFile(fileId: '44eaa7a2-d003-4348-b6b4-a61fd967e2ca', variable: 'MAVEN_SETTINGS')]) {
                     sh "mvn -gs $MAVEN_SETTINGS deploy"
                 }
             }
-        }
+        }*/
         stage('Release on GitHub'){
             steps{
                 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'jenkins-user-for-devon4j-github', usernameVariable: 'GITHUB_DEVON4J_CREDENTIALS_USR', passwordVariable: 'GITHUB_DEVON4J_CREDENTIALS_PSW']]) { 
@@ -106,6 +106,6 @@ pipeline {
                     sh("git push http://$GITHUB_DEVON4J_CREDENTIALS_USR:$GITHUB_DEVON4J_CREDENTIALS_PSW@${repoPath} HEAD:${env.BRANCH_NAME}")
                 }
             }
-        }*/
+        }
     }
 }
